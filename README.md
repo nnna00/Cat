@@ -1,11 +1,66 @@
-<div align="center">
+# 🐾 Kuro Neko Ledger (黑猫账本) - 部署指南
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+这是一个基于 **React + Express + SQLite** 开发的全栈记账应用，配有可爱的卡通 Live2D 风格小黑猫。你可以将其部署到自己的服务器上，让朋友们通过链接访问。
 
-  <h1>Built with AI Studio</h2>
+## 🚀 快速开始
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+### 1. 环境准备
+确保你的服务器已安装：
+- **Node.js** (建议 v18 或更高版本)
+- **npm** 或 **yarn**
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+### 2. 获取代码
+1. 在 AI Studio 界面点击 **Download** 下载项目压缩包。
+2. 解压到服务器的目标文件夹。
 
-</div>
+### 3. 安装依赖
+在项目根目录下运行：
+```bash
+npm install
+```
+*注意：项目使用了 `better-sqlite3`，安装时会自动编译原生模块。如果安装失败，请确保你的服务器安装了 Python 和 C++ 编译环境（如 `build-essential`）。*
+
+### 4. 配置环境变量
+在根目录下创建一个 `.env` 文件，并添加你的 Gemini API Key（用于 AI 聊天功能）：
+```env
+GEMINI_API_KEY=你的_GEMINI_API_KEY
+NODE_ENV=production
+```
+
+### 5. 编译与运行
+由于这是一个全栈应用，你需要先编译前端代码，然后启动后端服务器。
+
+**编译前端：**
+```bash
+npm run build
+```
+
+**启动服务器：**
+```bash
+# 使用 npm start 启动（已配置为生产模式）
+npm start
+```
+
+### 6. 访问应用与内网穿透
+- **本地访问**：访问 `http://localhost:3000`
+- **公网访问**：
+    - 如果你有公网 IP，请在防火墙中开启 `3000` 端口。
+    - 如果没有公网 IP，可以使用 **crawlee**、**frp** 或 **ngrok** 进行内网穿透。
+    - 推荐使用 **Nginx** 作为反向代理，将域名指向 `3000` 端口。
+
+---
+
+## 📂 项目结构说明
+- `server.ts`: 后端 Express 服务器逻辑，包含 API 接口和 SQLite 数据库初始化。
+- `src/`: 前端 React 源代码。
+- `data.db`: 自动生成的 SQLite 数据库文件（启动后生成）。
+- `dist/`: 前端编译后的静态文件。
+
+## 🛠️ 进阶配置
+- **反向代理**：建议使用 Nginx 将 `80` 或 `443` 端口请求转发到 `3000` 端口。
+- **SSL 证书**：为了安全，建议配置 HTTPS。
+- **多用户**：当前版本为共享账本模式。如果需要多用户隔离，请联系开发者进一步定制。
+
+---
+
+祝你和你的朋友们记账愉快！喵~ 🐾
